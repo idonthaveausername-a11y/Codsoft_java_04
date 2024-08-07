@@ -1,0 +1,87 @@
+// StudentGradeCalculator.java
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+public class StudentGradeCalculator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter student's name: ");
+        String studentName = scanner.nextLine();
+
+        int numSubjects = getValidIntegerInput(scanner, "Enter number of subjects: ");
+
+        double totalMarks = 0;
+        for (int i = 0; i < numSubjects; i++) {
+            double marks = getValidDoubleInput(scanner, "Enter marks for subject " + (i + 1) + ": ");
+            totalMarks += marks;
+        }
+
+        double averageMarks = totalMarks / numSubjects;
+        String grade = getGrade(averageMarks);
+
+        System.out.println("\nStudent Name: " + studentName);
+        System.out.println("Total Marks: " + totalMarks);
+        System.out.println("Average Marks: " + averageMarks);
+        System.out.println("Grade: " + grade);
+    }
+
+    /**
+     * Returns a valid integer input from the user.
+     *
+     * @param scanner Scanner object
+     * @param prompt  input prompt
+     * @return valid integer input
+     */
+    public static int getValidIntegerInput(Scanner scanner, String prompt) {
+        while (true) {
+            try {
+                System.out.print(prompt);
+                return scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid integer.");
+                scanner.next(); // clear invalid input
+            }
+        }
+    }
+
+    /**
+     * Returns a valid double input from the user.
+     *
+     * @param scanner Scanner object
+     * @param prompt  input prompt
+     * @return valid double input
+     */
+    public static double getValidDoubleInput(Scanner scanner, String prompt) {
+        while (true) {
+            try {
+                System.out.print(prompt);
+                return scanner.nextDouble();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+                scanner.next(); // clear invalid input
+            }
+        }
+    }
+
+    /**
+     * Returns the grade based on the average marks.
+     *
+     * @param averageMarks average marks obtained by the student
+     * @return grade (A, B, C, D, or F)
+     */
+    public static String getGrade(double averageMarks) {
+        if (averageMarks >= 90) {
+            return "A";
+        } else if (averageMarks >= 80) {
+            return "B";
+        } else if (averageMarks >= 70) {
+            return "C";
+        } else if (averageMarks >= 60) {
+            return "D";
+        } else {
+            return "F";
+        }
+    }
+}
